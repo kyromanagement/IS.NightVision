@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <Version>1.0.0</Version>
+    <Authors>Init Studio</Authors>
+    <Company>Init Studio</Company>
+    <Description>Individual native night vision for SCP: Secret Laboratory dedicated servers.</Description>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="ExMod.Exiled" Version="9.15.3" PrivateAssets="all" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(SlManagedDir)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(SlManagedDir)/UnityEngine.PhysicsModule.dll" Private="false" />
+    <Reference Include="Mirror" HintPath="$(SlManagedDir)/Mirror.dll" Private="false" />
+    <Reference Include="Pooling" HintPath="$(SlManagedDir)/Pooling.dll" Private="false" />
+    <EmbeddedResource Include="../night_vision_manager.yml" LogicalName="NightVisionManager.DefaultSettings.yml" />
+  </ItemGroup>
+  <Target Name="CheckGameReferences" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(SlManagedDir)/UnityEngine.CoreModule.dll') Or !Exists('$(SlManagedDir)/UnityEngine.PhysicsModule.dll') Or !Exists('$(SlManagedDir)/Mirror.dll') Or !Exists('$(SlManagedDir)/Pooling.dll')"
+           Text="Set SlManagedDir to the SCPSL_Data/Managed directory of an SCP:SL 14.2.9 dedicated server." />
+  </Target>
+</Project>

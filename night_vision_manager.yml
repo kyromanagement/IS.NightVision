@@ -1,0 +1,77 @@
+# NightVisionManager 1.0.0 · Init Studio
+# SCP: Secret Laboratory 14.2.9 / EXILED 9.15.3 / LabAPI 1.1.7
+is_enabled: true
+debug: false
+default_profile: Standard
+
+activation:
+  command_enabled: true            # .nvg nella console di gioco
+  keybind_enabled: true
+  suggested_key: N                 # Suggerimento, riassegnabile dal giocatore
+  setting_id: 45380129              # ID persistente e univoco sul server
+  toggle_cooldown_seconds: 0.35    # Condiviso tra tasto e console
+
+adaptation:
+  enabled: true
+  seconds: 0.75                   # Tempo di transizione tra i livelli di guadagno
+
+shutdown_effects:
+  blur: true                      # Effetto nativo Blurred
+  disorientation: false           # Effetto nativo Concussed
+  duration: 1.5                    # Secondi, da 1 a 2
+
+# Intensità native intere da 1 a 255. I profili inclusi riducono il guadagno con le luci accese.
+# Se lo stato delle luci è sconosciuto viene usato intensity.
+profiles:
+  Low:
+    intensity: 35
+    lit_intensity: 18
+  Standard:
+    intensity: 65
+    lit_intensity: 30
+  High:
+    intensity: 100
+    lit_intensity: 45
+
+# Condizioni: Always, BlackoutOnly, DarkRoomsOnly, SelectedZones, Disabled.
+# BlackoutOnly richiede un blackout di SCP-079 osservato dal plugin.
+# SelectedZones usa LightContainment, HeavyContainment, Entrance, Surface, Pocket o Other.
+# Le proprietà omesse ereditano la regola precedente. Senza regole l'accesso è negato.
+teams:
+  Ntf:
+    enabled: true
+    profile: Standard
+    condition: Always
+    auto_activate: false
+  ChaosInsurgency:
+    enabled: false
+    profile: High
+    condition: BlackoutOnly
+  FacilityGuards:
+    enabled: false
+    profile: Low
+    condition: Disabled
+  Tutorial:
+    enabled: false
+    profile: Low
+    condition: SelectedZones
+    zones: [HeavyContainment, Entrance]
+  # Sono accettati anche gli altri Team nativi, ad esempio FoundationForces.
+
+# Esempio: per escludere solo lo Specialist, impostare:
+# roles:
+#   NtfSpecialist:
+#     enabled: false
+roles: {}
+
+# Usa gli ID numerici dei ruoli registrati in Exiled.CustomRoles.
+custom_roles: {}
+
+# Da concedere nel sistema di permessi EXILED ai gruppi amministrativi appropriati.
+permissions:
+  grant: nightvision.grant
+  remove: nightvision.remove
+  toggle: nightvision.toggle
+  status: nightvision.status
+  profile: nightvision.profile
+  reload: nightvision.reload
